@@ -8,4 +8,5 @@ public class FileModel {
     //@Id
     private String id;
     private String name;
+    private String document;
 }
