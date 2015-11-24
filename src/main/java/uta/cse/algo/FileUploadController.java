@@ -36,10 +36,10 @@ public class FileUploadController {
 
                 byte[] bytes = file.getBytes();
                 BufferedOutputStream stream =
-                        new BufferedOutputStream(new FileOutputStream(new File(name)));
+                        new BufferedOutputStream(new FileOutputStream(new File("tmp")));
                 stream.write(bytes);
                 stream.close();
-                File convFile = new File(name);
+                File convFile = new File("tmp");
                 Scanner s = new Scanner(convFile);
                 ArrayList<String> list = new ArrayList<String>();
 
