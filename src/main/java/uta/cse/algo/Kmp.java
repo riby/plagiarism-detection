@@ -11,10 +11,12 @@ public class Kmp {
 
     private String[] T;
     private String[] P;
+    private String fname;
 
-    public Kmp(String[] T, String P[]) {
+    public Kmp(String[] T, String P[],String fname) {
         this.T = T;
         this.P = P;
+        this.fname=fname;
 
     }
 
@@ -23,7 +25,7 @@ public class Kmp {
         int[] arr = new int[m];
         int i = 1, k = 0;
         while (i < m) {
-            if (P[i] == P[k]) {
+            if (P[i].equals(P[k]) ) {
                 k += 1;
                 arr[i] = k;
                 i += 1;
@@ -48,14 +50,14 @@ public class Kmp {
         int q = 0;
         int count = 0, i = 0, j = 0;
         while (i < n) {
-            if (P[j] == T[i]) {
+            if (P[j].equals(T[i])) {
                 i += 1;
                 j += 1;
             }
             if (j == m) {
                 System.out.println("Found Pattern at index" + (i - j));
                 j = arr[j - 1];
-            } else if (i < n && P[j] != T[i]) {
+            } else if (i < n && !P[j].equals(T[i])) {
                 if (j != 0)
                     j = arr[j - 1];
                 else

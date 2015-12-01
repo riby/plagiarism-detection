@@ -17,4 +17,12 @@ public class FileModel {
         this.name = name;
         this.linesOfData = linesOfData;
     }
+    public String getName()
+    {
+        return this.name;
+    }
+    public ArrayList<String> getLines()
+    {
+        return this.linesOfData;
+    }
 }
