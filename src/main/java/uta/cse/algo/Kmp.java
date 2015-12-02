@@ -43,9 +43,10 @@ public class Kmp {
     }
 
 
-    public String run() {
+    public boolean run() {
         int n = T.length;
         int m = P.length;
+        boolean flag=false;
         int[] arr = compute_prefix_function(P);
         int q = 0;
         int count = 0, i = 0, j = 0;
@@ -55,7 +56,8 @@ public class Kmp {
                 j += 1;
             }
             if (j == m) {
-                System.out.println("Found Pattern at index" + (i - j));
+
+                flag=true;
                 j = arr[j - 1];
             } else if (i < n && !P[j].equals(T[i])) {
                 if (j != 0)
@@ -64,6 +66,9 @@ public class Kmp {
                     i += 1;
             }
         }
-        return null;
+
+        return flag;
+
+
     }
 }

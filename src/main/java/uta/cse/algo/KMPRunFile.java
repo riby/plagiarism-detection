@@ -38,7 +38,11 @@ public class KMPRunFile extends Thread implements  FileRead  {
                 for(String s2:testFile)
                 {
                     Kmp k=new Kmp(s1.split(""),s2.split(""),Fnames.get(i));
-                    k.run();
+                    boolean response =k.run();
+                    if(response)
+                    {
+                        System.out.println("String "+s1 +" matched in file"+Fnames.get(i));
+                    }
                 }
             }
             i++;
@@ -73,6 +77,9 @@ public class KMPRunFile extends Thread implements  FileRead  {
         }
 
 
+    }
+    public static boolean isBlankOrNull(String str) {
+        return (str == null || "".equals(str.trim()));
     }
     public ArrayList<String> makeSentences(ArrayList<String> file) {
         ArrayList<String> temp = new ArrayList<String>();

@@ -117,27 +117,7 @@ public class FileController {
             ArrayList<String> a2=repository.findByName(s1).getLines();
             listOfFiles.add(a2);
         }
-        //ArrayList<String> a2=repository.findByName("asd").getLines();
-        System.out.println(a1);
-       // System.out.println(a2);
         KMPRunFile km=new KMPRunFile(a1,listOfFiles,fnames);
-        km.run();
-     /*   for( String s1 : a1)
-        {
-            for(String s2:a2)
-            {
-                System.out.println(s1+" with "+s2);
-
-
-                Kmp k=new Kmp(s2.split(""),s1.split(""));
-                k.run();
-            }
-        }*/
-       // Kmp k=new Kmp(T,P);
-        //k.run();
-
-      //  Interator
-//        for (FileModel fl )
 
 
         return "You can upload a file by posting to this same URL.";
