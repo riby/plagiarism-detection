@@ -117,7 +117,12 @@ public class FileController {
             ArrayList<String> a2=repository.findByName(s1).getLines();
             listOfFiles.add(a2);
         }
-        KMPRunFile km=new KMPRunFile(a1,listOfFiles,fnames);
+        //KMPRunFile km=new KMPRunFile(a1,listOfFiles,fnames);
+        //km.run();
+        //LcssModule lcss=new LcssModule(a1,listOfFiles,fnames);
+        //lcss.execute();
+        NaiveRunFile nr=new NaiveRunFile(a1,listOfFiles,fnames);
+        nr.run();
 
 
         return "You can upload a file by posting to this same URL.";

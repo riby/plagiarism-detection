@@ -29,6 +29,7 @@ public class KMPRunFile extends Thread implements  FileRead  {
     {
         readFile();
         int i=0;
+        ArrayList<String> resultList=new ArrayList<String>();
 
         for(ArrayList<String> al:listOfFiles)
         {
