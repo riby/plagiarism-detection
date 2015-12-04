@@ -15,22 +15,26 @@ import java.util.Map;
  * Created by riby on 11/22/15.
  */
 public class KMPRunFile  implements  FileRead  {
+    Map<String, Integer> matchingSentencesMap = new HashMap<String, Integer>();
+    long totalTime;
+    double plagarizedPercent;
+    int totalCorpusSize;
+    int patternFileSize;
     //@Autowired
     // private static FileRepository repository;
     private ArrayList<String> testFile;
     private ArrayList<ArrayList<String>> listOfFiles;
     private ArrayList<String> Fnames;
-    Map<String,Integer> matchingSentencesMap = new HashMap<String, Integer>();
-    long totalTime;
-    double plagarizedPercent;
-    int totalCorpusSize;
-    int patternFileSize;
 
     KMPRunFile(ArrayList<String> testFile, ArrayList<ArrayList<String>> listOfFiles, ArrayList<String> Fnames )
     {
         this.testFile=testFile;
         this.listOfFiles=listOfFiles;
         this.Fnames=Fnames;
+    }
+
+    public static boolean isBlankOrNull(String str) {
+        return (str == null || "".equals(str.trim()));
     }
 
     public String run()
@@ -72,7 +76,7 @@ public class KMPRunFile  implements  FileRead  {
 
         System.out.println("Run time for KMP algorithm = "+totalTime);
         System.out.println("Document Plagarism Percentage = " + plagarizedPercent);
-        result=result+"</br>Run time for LCSS algorithm = "+totalTime;
+        result = result + "</br>Run time for KMP algorithm = " + totalTime;
         result=result+"</br>Document Plagarism Percentage = " + plagarizedPercent;
 
         FileController.performanceDetailsList.add(new PerformanceDetails("KMP",plagarizedPercent,totalTime));
@@ -118,9 +122,7 @@ public class KMPRunFile  implements  FileRead  {
 
 
     }
-    public static boolean isBlankOrNull(String str) {
-        return (str == null || "".equals(str.trim()));
-    }
+
     public ArrayList<String> makeSentences(ArrayList<String> file) {
         ArrayList<String> temp = new ArrayList<String>();
 

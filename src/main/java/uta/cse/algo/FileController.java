@@ -3,37 +3,32 @@ package uta.cse.algo;
 /**
  * Created by riby on 11/20/15.
  */
-import java.io.*;
-import java.util.*;
-
-import org.apache.poi.hssf.record.formula.functions.Char;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 
 public class FileController {
+    public static ArrayList<PerformanceDetails> performanceDetailsList = new ArrayList<PerformanceDetails>();
+    Map<String, Integer> algo = new HashMap<String, Integer>();
     @Autowired
     private FileRepository repository;
-    public static ArrayList<PerformanceDetails> performanceDetailsList= new ArrayList<PerformanceDetails>();
     private ArrayList<String> listOfFilesNames=new ArrayList<String>();
     private String testFile=null;
-    Map<String,Integer> algo=new HashMap<String, Integer>();
-
 
     @RequestMapping(value="/upload", method=RequestMethod.GET)
     public @ResponseBody String provideUploadInfo() {
@@ -53,7 +48,7 @@ public class FileController {
         {
             if(!file.get(i).isEmpty())
             {
-                MultipartFile cm = (MultipartFile) file.get(i);
+                MultipartFile cm = file.get(i);
 
 
                 System.out.println(cm.getOriginalFilename()+cm.getSize());
@@ -168,7 +163,7 @@ public class FileController {
 
 
       //  model.addAttribute("result", result);
-        return result+"</br></br><a href='/success2'>Test More Algo</a></div>";
+        return result + "</br></br><a href='/success2'>Test More Algo</a></br><a href='/'>Start New Submission</a></div>";
     }
     @RequestMapping("/success3")
     public String greeting3(@RequestParam(value="result") String result, Model model) {

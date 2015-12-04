@@ -3,30 +3,26 @@ package uta.cse.algo;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
 public class NaiveRunFile  implements  FileRead  {
+    Map<String, Integer> matchingSentencesMap = new HashMap<String, Integer>();
+    long totalTime;
+    double plagarizedPercent;
+    int totalCorpusSize;
+    int patternFileSize;
     //@Autowired
    // private static FileRepository repository;
     private ArrayList<String> testFile;
     private ArrayList<ArrayList<String>> listOfFiles;
     private ArrayList<String> Fnames;
-    Map<String,Integer> matchingSentencesMap = new HashMap<String, Integer>();
-    long totalTime;
-    double plagarizedPercent;
-    int totalCorpusSize;
-    int patternFileSize;
 
     NaiveRunFile(ArrayList<String> testFile, ArrayList<ArrayList<String>> listOfFiles, ArrayList<String> Fnames )
     {
@@ -34,6 +30,10 @@ public class NaiveRunFile  implements  FileRead  {
         this.listOfFiles=listOfFiles;
         this.Fnames=Fnames;
 
+    }
+
+    public static boolean isBlankOrNull(String str) {
+        return (str == null || "".equals(str.trim()));
     }
 
     public String run()
@@ -76,7 +76,7 @@ public class NaiveRunFile  implements  FileRead  {
 
         System.out.println("Run time for Naive algorithm = "+totalTime);
         System.out.println("Document Plagarism Percentage = " + plagarizedPercent);
-        result=result+"</br>Run time for LCSS algorithm = "+totalTime;
+        result = result + "</br>Run time for Naive algorithm = " + totalTime;
         result=result+"</br>Document Plagarism Percentage = " + plagarizedPercent;
 
         FileController.performanceDetailsList.add(new PerformanceDetails("NAIVE",plagarizedPercent,totalTime));
@@ -97,6 +97,7 @@ public class NaiveRunFile  implements  FileRead  {
             outFile.close();
         }
         catch(Exception e){
+
             System.out.println(e);
         }
         return result;
@@ -119,9 +120,7 @@ public class NaiveRunFile  implements  FileRead  {
 
 
     }
-    public static boolean isBlankOrNull(String str) {
-        return (str == null || "".equals(str.trim()));
-    }
+
     public ArrayList<String> makeSentences(ArrayList<String> file) {
         ArrayList<String> temp = new ArrayList<String>();
 
