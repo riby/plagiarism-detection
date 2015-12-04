@@ -13,15 +13,20 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@SpringBootApplication
+
 public class FileController {
     @Autowired
     private FileRepository repository;
@@ -61,13 +66,20 @@ public class FileController {
         }
         return "uploadfilesuccess";
     }
+    @RequestMapping("/success")
+    public String greeting(@RequestParam(value="name", required=false, defaultValue="World") String name, Model model) {
+        model.addAttribute("name", name);
+        return "/folder_upload.html";
+    }
+
     @RequestMapping(value="/upload", method=RequestMethod.POST)
-    public @ResponseBody String handleFileUpload(@RequestParam("name") String name,
-                                                 @RequestParam("file") MultipartFile  file){
+    public String handleFileUpload(@RequestParam("file") MultipartFile  file, Model model){
+        String name="";
         if (!file.isEmpty()) {
             try {
 
-                String Fname=file.getOriginalFilename();
+
+                name=file.getOriginalFilename();
                 ArrayList<String> list = new ArrayList<String>();
 
                 InputStream inputStream = file.getInputStream();
@@ -79,13 +91,17 @@ public class FileController {
                     System.out.println(line);
                     list.add(line);
                 }
-                repository.save(new FileModel(name,list));
-                return "You successfully uploaded " + name + "!";
+                repository.save(new FileModel(name, list));
+                //greeting();
+               return "redirect:/success";
+                //return new ModelAndView("folder_upload.html");
             } catch (Exception e) {
+               // return "You failed to upload " + name + " => " + e.getMessage();
                 return "You failed to upload " + name + " => " + e.getMessage();
             }
         } else {
-            return "You failed to upload " + name + " because the file was empty.";
+           return "You failed to upload " + name + " because the file was empty.";
+            //return "/folder_upload.html";
         }
     }
 
@@ -127,7 +143,5 @@ public class FileController {
 
         return "You can upload a file by posting to this same URL.";
     }
-    public static void main(String[] args) throws Exception {
-        SpringApplication.run(FileController.class, args);
-    }
+
 }

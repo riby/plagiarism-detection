@@ -79,7 +79,7 @@ function submit() {
     </script>
 </head>
 
-<div >
+<div ng-app="hello">
     <div class="czontainer" style="padding: 5%;margin-left:30%; align:center">
 
 
@@ -87,30 +87,31 @@ function submit() {
             <h1>Plagiarism Detection Tool !</h1>
 
             <div class="row">
-                <div class="col-sm-3 col-md-6 col-lg-7" id="upload_file" style="background-color:black;color:white">
+                <div class="col-sm-3 col-md-6 col-lg-7" id="upload_folder"
+                     style="background-color:brown;color:white">
                     <p>
 
-                    <form method="POST" enctype="multipart/form-data"
-                          action="/upload">
-                        Choose Test File to upload: <br/><br/>
+                    <form method="post" action="/upload_folders"
+                          enctype="multipart/form-data">
 
-                       <span class="btn btn-default btn-file">
-    Choose Test File <input type="file" name="file" value="Choose File">
+                        Select All files to upload.<br/><br/>
 
+
+
+                <span class="btn btn-default btn-file">
+                   All Files to Compare<input name="files[]" type="file" multiple="multiple" value="Choose File">
                 </span>
-                        <br/>
-                        <br/>
-
-                        <input type="submit" id="submit_btn" style="color:black">
-
+                        <br/><br/>
+                          <span class="btn btn-default btn-file">
+    Submit <input type="submit" onclick="submit();">
+</span>
 
                     </form>
                     </p>
                 </div>
-
+            </div>
         </div>
     </div>
 </div>
-    </div>
 </body>
 </html>
