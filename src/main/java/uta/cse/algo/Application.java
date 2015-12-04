@@ -5,14 +5,11 @@ package uta.cse.algo;
  */
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
-import org.springframework.stereotype.*;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 
 
 @SpringBootApplication
 
-public class Controller {
+public class Application {
 /*
     @RequestMapping("/")
     @ResponseBody
@@ -22,6 +19,6 @@ public class Controller {
 */
 
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(Controller.class, args);
+        SpringApplication.run(Application.class, args);
     }
 }

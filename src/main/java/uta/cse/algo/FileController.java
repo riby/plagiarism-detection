@@ -4,10 +4,9 @@ package uta.cse.algo;
  * Created by riby on 11/20/15.
  */
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
+import org.apache.poi.hssf.record.formula.functions.Char;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -30,6 +29,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class FileController {
     @Autowired
     private FileRepository repository;
+    public static ArrayList<PerformanceDetails> performanceDetailsList= new ArrayList<PerformanceDetails>();
+    private ArrayList<String> listOfFilesNames=new ArrayList<String>();
+    private String testFile=null;
+    Map<String,Integer> algo=new HashMap<String, Integer>();
+
 
     @RequestMapping(value="/upload", method=RequestMethod.GET)
     public @ResponseBody String provideUploadInfo() {
@@ -37,7 +41,13 @@ public class FileController {
     }
 
     @RequestMapping(value="/upload_folders", method=RequestMethod.POST)
-    public @ResponseBody String UploadReceipts(@RequestParam("files[]") List<MultipartFile> file) throws Exception {
+    public String UploadReceipts(@RequestParam("files[]") List<MultipartFile> file) throws Exception {
+        algo.put("LCSS",1);
+        algo.put("KMP",2);
+        algo.put("NAIVE",3);
+        algo.put("BOYER",4);
+
+        listOfFilesNames.clear();
 
         for(int i=0; i< file.size(); i++)
         {
@@ -48,6 +58,7 @@ public class FileController {
 
                 System.out.println(cm.getOriginalFilename()+cm.getSize());
                 String name=cm.getOriginalFilename();
+                listOfFilesNames.add(name);
                 ArrayList<String> list = new ArrayList<String>();
 
                 InputStream inputStream = cm.getInputStream();
@@ -64,7 +75,13 @@ public class FileController {
 
             }
         }
-        return "uploadfilesuccess";
+        return "redirect:/success2";
+    }
+
+    @RequestMapping("/success2")
+    public String greeting2(@RequestParam(value="name", required=false, defaultValue="World") String name, Model model) {
+        model.addAttribute("name", name);
+        return "/algo_select.html";
     }
     @RequestMapping("/success")
     public String greeting(@RequestParam(value="name", required=false, defaultValue="World") String name, Model model) {
@@ -75,11 +92,14 @@ public class FileController {
     @RequestMapping(value="/upload", method=RequestMethod.POST)
     public String handleFileUpload(@RequestParam("file") MultipartFile  file, Model model){
         String name="";
+        testFile="";
+        repository.deleteAll();
         if (!file.isEmpty()) {
             try {
 
 
                 name=file.getOriginalFilename();
+                testFile=name;
                 ArrayList<String> list = new ArrayList<String>();
 
                 InputStream inputStream = file.getInputStream();
@@ -110,38 +130,49 @@ public class FileController {
         return repository.findAll();
 
     }
-    @RequestMapping(value="/process_files", method=RequestMethod.GET)
-    public @ResponseBody String performMatching() {
+    @RequestMapping(value="/process_files", method=RequestMethod.POST)
+    public @ResponseBody String performMatching(@RequestParam("algo_option") String algoName,Model model) {
         List<FileModel> Listrepo= repository.findAll();
-        String [] T={"a","b","c","a","b","a","b","a","g","c"};
-        String [] P={"a","b","a","b","a","g","c"};
 
-       // System.out.println(Listrepo);
         for(FileModel fl :Listrepo)
             System.out.println(fl.getName());
 
-        System.out.println(repository.findByName("asd1").getLines());
-
-        ArrayList<String> a1=repository.findByName("text4.txt").getLines();
+        int option=algo.get(algoName);
+        ArrayList<String> a1=repository.findByName(testFile).getLines();
         ArrayList<ArrayList<String>> listOfFiles=new ArrayList<ArrayList<String>>();
-        ArrayList<String> fnames=new ArrayList<String>();
-        fnames.add("test1.txt");
-        fnames.add("test2.txt");
-        fnames.add("test3.txt");
+
+        String result="";
         int i=0;
-        for( String s1: fnames) {
+        for( String s1: listOfFilesNames) {
             ArrayList<String> a2=repository.findByName(s1).getLines();
             listOfFiles.add(a2);
         }
-        //KMPRunFile km=new KMPRunFile(a1,listOfFiles,fnames);
-        //km.run();
-        //LcssModule lcss=new LcssModule(a1,listOfFiles,fnames);
-        //lcss.execute();
-        NaiveRunFile nr=new NaiveRunFile(a1,listOfFiles,fnames);
-        nr.run();
+        switch (option) {
+            case 2:
+                KMPRunFile km = new KMPRunFile(a1, listOfFiles, listOfFilesNames);
+                result=km.run();
+                break;
+            case 1:
+                LcssModule lcss=new LcssModule(a1,listOfFiles,listOfFilesNames);
+                result=lcss.execute();
+                break;
+            case 3:
+                NaiveRunFile nr=new NaiveRunFile(a1,listOfFiles,listOfFilesNames);
+                result=nr.run();
+                break;
+            case 4:
+                break;
+
+        }
 
 
-        return "You can upload a file by posting to this same URL.";
+
+      //  model.addAttribute("result", result);
+        return result+"</br></br><a href='/success2'>Test More Algo</a></div>";
     }
-
+    @RequestMapping("/success3")
+    public String greeting3(@RequestParam(value="result") String result, Model model) {
+        model.addAttribute("result", result);
+        return "/output.html";
+    }
 }

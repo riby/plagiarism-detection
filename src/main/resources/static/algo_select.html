@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+          integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+            integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+            crossorigin="anonymous"></script>
+
+    <title>Plagirism Detection</title>
+    <link href="css/angular-bootstrap.css" rel="stylesheet">
+    <script src="js/angular-bootstrap.js" type="text/javascript"></script>
+    <script src="js/hello.js"></script>
+    <style type="text/css">
+        [ng\:cloak], [ng-cloak], .ng-cloak {
+        display: none !important;
+        }
+        .btn-file {
+        position: relative;
+        overflow: hidden;
+        }
+        .btn-file input[type=submit] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 100px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        outline: none;
+        background: white;
+        cursor: inherit;
+        display: block;
+        }
+        .btn-file input[type=file] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 100px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        outline: none;
+        background: white;
+        cursor: inherit;
+        display: block;
+        }
+    </style>
+    <script type="javascript">
+
+        $(document).on('change', '.btn-file :file', function() {
+    var input = $(this),
+        numFiles = input.get(0).files ? input.get(0).files.length : 1,
+        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+    input.trigger('fileselect', [numFiles, label]);
+});
+$(document).ready( function() {
+    $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
+        console.log(numFiles);
+        console.log(label);
+    });
+});
+function submit() {
+    document.getElementById("submit_btn").click();
+}
+
+
+    </script>
+</head>
+
+<div >
+    <div class="czontainer" style="padding: 5%;margin-left:30%; align:center">
+
+
+        <div class="container-fluid" style="align:center">
+            <h1>Plagiarism Detection Tool !</h1>
+
+            <div class="row">
+                <div class="col-sm-3 col-md-6 col-lg-7" id="upload_file" style="background-color:black;color:white">
+                    <p>
+
+                    <form method="POST" enctype="multipart/form-data"
+                          action="/process_files">
+                    <div class="radio">
+                        <label><input type="radio"  value="KMP" name="algo_option">KMP</label>
+                    </div>
+                    <div class="radio">
+                        <label><input type="radio"value="LCSS" name="algo_option">LCSS</label>
+                    </div>
+                    <div class="radio">
+                        <label><input type="radio"  value="NAIVE" name="algo_option" >NAIVE</label>
+                    </div>
+                    <div class="radio">
+                        <label><input type="radio" value="BOYER" name="algo_option">BOYER</label>
+                    </div>
+                    <input type="submit" id="submit_btn" style="color:black">
+
+
+
+                </form>
+                    </p>
+                </div>
+
+        </div>
+    </div>
+</div>
+    </div>
+</body>
+</html>
