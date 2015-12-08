@@ -156,6 +156,8 @@ public class FileController {
                 result=nr.run();
                 break;
             case 4:
+                BoyerMooreRunFile bm = new BoyerMooreRunFile(a1, listOfFiles, listOfFilesNames);
+                result = bm.run();
                 break;
 
         }
