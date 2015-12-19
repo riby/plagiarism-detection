@@ -1,9 +1,11 @@
-
 package uta.cse.algo;
+
 /**
  * Created by alokrai on 12/6/15.
  */
+
 import java.util.ArrayList;
+
 public class BoyerMoore {
     private final int K;
     private int[] arrRight;
@@ -11,17 +13,21 @@ public class BoyerMoore {
     private String fname;
     private String text;
 
+
     public BoyerMoore(String pattern, String text, String fname) {
         this.K = 1000;
         this.pattern = pattern;
         this.text = text;
         this.fname = fname;
+
+
         arrRight = new int[K];
         for (int c = 0; c < K; c++)
             arrRight[c] = -1;
         for (int j = 0; j < pattern.length(); j++)
             arrRight[pattern.charAt(j)] = j;
     }
+
 
     public ArrayList<Integer> search(String text) {
         int N1 = pattern.length();
@@ -43,10 +49,11 @@ public class BoyerMoore {
         }
         return ArrInt;
     }
+
     public boolean match() {
+
         ArrayList<Integer> result = new ArrayList<Integer>();
         result = search(pattern);
         return !result.isEmpty();
     }
 }
-
