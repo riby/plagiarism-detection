@@ -1,5 +1,6 @@
 package uta.cse.algo;
 
+
 public class LCSS {
 
 	int threshold; 
@@ -34,8 +35,6 @@ public class LCSS {
 		System.out.println("\nLevel of suspicison: " + levelOfSuspicion);
 		
 		//if level of suspicion for plagiarism is above the set threshold, return true else not
-		if(levelOfSuspicion > threshold)
-			return true;
-		return false;
+		return levelOfSuspicion > threshold;
 	}
 }

@@ -3,6 +3,8 @@ import java.util.*;
 
 /**
  * Created by riby on 11/20/15.
+ *
+ * Database Model of a file structure in mongodb
  */
 public class FileModel {
 

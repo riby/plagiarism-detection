@@ -27,6 +27,11 @@ public class BoyerMooreRunFile implements FileRead {
     private ArrayList<ArrayList<String>> listOfFiles;
     private ArrayList<String> fname;
 
+    /*
+    The Constructer take as input the Text to compare, Text pattern and fname is the file names
+    * which is being passed at runtime
+    * */
+
     BoyerMooreRunFile(ArrayList<String> testFile, ArrayList<ArrayList<String>> listOfFiles, ArrayList<String> fname) {
         this.testFile = testFile;
         this.listOfFiles = listOfFiles;
@@ -63,12 +68,15 @@ public class BoyerMooreRunFile implements FileRead {
             }
             i++;
         }
+        //Time calculation of runtime
+
         long endTime = System.currentTimeMillis();
         totalTime = endTime - startTime;
         int matchedSentences = matchingSentencesMap.size();
         int totalSentences = testFile.size();
-
         plagarizedPercent = (((double) matchedSentences) / totalSentences) * 100;
+
+        // Total for algorithm
 
         System.out.println("Run time for BoyerMoore algorithm = " + totalTime);
         System.out.println("Document Plagarism Percentage = " + plagarizedPercent);

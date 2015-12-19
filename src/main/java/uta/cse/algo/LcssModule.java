@@ -13,16 +13,17 @@ import java.util.Map;
 
 public class LcssModule {
 
-	private ArrayList<String> suspectFile;
-	private ArrayList<ArrayList<String>> listOfFiles;
-	private ArrayList<String> fileNames;
-	Map<String,Integer> matchingParagraphsMap = new HashMap<String, Integer>();
+	Map<String, Integer> matchingParagraphsMap = new HashMap<String, Integer>();
 	long totalTime;
 	double plagarizedPercent;
 	int totalCorpusSize;
 	int patternFileSize;
-	
-	//constructor
+	private ArrayList<String> suspectFile;
+	private ArrayList<ArrayList<String>> listOfFiles;
+	private ArrayList<String> fileNames;
+
+	/*The Constructer take as input the suspect file to compare, List of text files and fileNames are the file names
+	* which are being passed at runtime*/
 	LcssModule(ArrayList<String> suspectFile, ArrayList<ArrayList<String>> listOfFiles, ArrayList<String> fileNames) {
 		this.suspectFile = suspectFile;
 		this.listOfFiles = listOfFiles;

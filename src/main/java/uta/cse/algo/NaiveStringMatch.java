@@ -1,15 +1,12 @@
 package uta.cse.algo;
 
-import javax.validation.constraints.Null;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
-
 public class NaiveStringMatch {
 
     private String[] T;
     private String[] P;
     private String fname;
+    /*The Constructer take as input the Text to compare, Text pattern and fname is the file names
+    * which is being passed at runtime*/
 
     public NaiveStringMatch(String[] T, String P[],String fname) {
         this.T = T;

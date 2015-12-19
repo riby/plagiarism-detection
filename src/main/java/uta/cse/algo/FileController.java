@@ -23,17 +23,26 @@ import java.util.Map;
 @Controller
 
 public class FileController {
+    //Arraylist keeping the performance statistics
     public static ArrayList<PerformanceDetails> performanceDetailsList = new ArrayList<PerformanceDetails>();
+    //Get the correct Algo from request
     Map<String, Integer> algo = new HashMap<String, Integer>();
+
+    //Binding of mongodb datasource using spring.io annotations
     @Autowired
     private FileRepository repository;
+
     private ArrayList<String> listOfFilesNames=new ArrayList<String>();
     private String testFile=null;
+
+    //Get request handler using upload
 
     @RequestMapping(value="/upload", method=RequestMethod.GET)
     public @ResponseBody String provideUploadInfo() {
         return "You can upload a file by posting to this same URL.";
     }
+
+    /* Upload directories and all files in it  to f analytics  */
 
     @RequestMapping(value="/upload_folders", method=RequestMethod.POST)
     public String UploadReceipts(@RequestParam("files[]") List<MultipartFile> file) throws Exception {
@@ -84,6 +93,7 @@ public class FileController {
         return "/folder_upload.html";
     }
 
+    // Upload the file which needs to be evaluated
     @RequestMapping(value="/upload", method=RequestMethod.POST)
     public String handleFileUpload(@RequestParam("file") MultipartFile  file, Model model){
         String name="";
@@ -125,6 +135,8 @@ public class FileController {
         return repository.findAll();
 
     }
+
+    // It takes input and process the algorithm selected.
     @RequestMapping(value="/process_files", method=RequestMethod.POST)
     public @ResponseBody String performMatching(@RequestParam("algo_option") String algoName,Model model) {
         List<FileModel> Listrepo= repository.findAll();

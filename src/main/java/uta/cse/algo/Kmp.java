@@ -1,15 +1,12 @@
 package uta.cse.algo;
 
-import javax.validation.constraints.Null;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 /**
  * Created by riby on 11/22/15.
  */
 public class Kmp {
 
+    /*The Constructer take as input the Text to compare, Text pattern and fname is the file names
+    * which is being passed at runtime*/
     private String[] T;
     private String[] P;
     private String fname;
@@ -20,6 +17,8 @@ public class Kmp {
         this.fname=fname;
 
     }
+
+    /* Precompute function is used defined*/
 
     public int[] compute_prefix_function(String[] P) {
         int m = P.length;
@@ -42,6 +41,8 @@ public class Kmp {
         return arr;
 
     }
+
+        /* Takes the intance varibales, after making the pre-compute array it compares the Text with Pattern. It returns accordingly.*/
 
 
     public boolean run() {

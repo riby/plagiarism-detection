@@ -1,83 +1,52 @@
-package uta.cse.algo;
 
+package uta.cse.algo;
 /**
  * Created by alokrai on 12/6/15.
  */
-
 import java.util.ArrayList;
-
 public class BoyerMoore {
-    private final int R;     // the radix
-    private int[] right;     // the bad-character skip array
-    private String pat;      // or as a string
+    private final int K;
+    private int[] arrRight;
+    private String pattern;
     private String fname;
-    private String txt;
+    private String text;
 
-    // pattern provided as a string
-    public BoyerMoore(String pat, String txt, String fname) {
-        this.R = 256;
-        this.pat = pat;
-        this.txt = txt;
+    public BoyerMoore(String pattern, String text, String fname) {
+        this.K = 1000;
+        this.pattern = pattern;
+        this.text = text;
         this.fname = fname;
-
-        // position of rightmost occurrence of c in the pattern
-        right = new int[R];
-        for (int c = 0; c < R; c++)
-            right[c] = -1;
-        for (int j = 0; j < pat.length(); j++)
-            right[pat.charAt(j)] = j;
+        arrRight = new int[K];
+        for (int c = 0; c < K; c++)
+            arrRight[c] = -1;
+        for (int j = 0; j < pattern.length(); j++)
+            arrRight[pattern.charAt(j)] = j;
     }
 
-    // return offset of first match; N if no match
-    public ArrayList<Integer> search(String txt) {
-        int M = pat.length();
-        int N = txt.length();
-        ArrayList<Integer> newArrayInt = new ArrayList<Integer>();
+    public ArrayList<Integer> search(String text) {
+        int N1 = pattern.length();
+        int N2 = text.length();
+        ArrayList<Integer> ArrInt = new ArrayList<Integer>();
         int skip;
-        for (int i = 0; i <= N - M; i += skip) {
+        for (int i = 0; i <= N2 - N1; i += skip) {
             skip = 0;
-            for (int j = M - 1; j >= 0; j--) {
-                if (pat.charAt(j) != txt.charAt(i + j)) {
-                    skip = Math.max(1, j - right[txt.charAt(i + j)]);
+            for (int j = N1 - 1; j >= 0; j--) {
+                if (pattern.charAt(j) != text.charAt(i + j)) {   //comparing the patter lastindex with textIndex
+                    skip = Math.max(1, j - arrRight[text.charAt(i + j)]); //if pattern index is not atching with text index skip it
                     break;
                 }
             }
             if (skip == 0) {
-                newArrayInt.add(i);    // found
+                ArrInt.add(i);
                 skip++;
             }
         }
-        return newArrayInt;                       // not found
+        return ArrInt;
     }
-
     public boolean match() {
-
         ArrayList<Integer> result = new ArrayList<Integer>();
-        result = search(pat);
+        result = search(pattern);
         return !result.isEmpty();
     }
 }
 
-// test client
-   /* public static void main(String[] args) throws IOException{
-
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Boyer Moore Algorithm Test\n");
-        System.out.println("\nEnter Text\n");
-        String txt = br.readLine();
-        System.out.println("\nEnter Pattern\n");
-        String pat = br.readLine();
-
-
-
-        //String pat = "abc";
-        //String txt = "asdf ghjk klll abc qwerty abc and poaslf abc";
-
-        BoyerMoore boyermoore1 = new BoyerMoore(pat);
-
-        ArrayList<Integer> offset = boyermoore1.search(txt);
-
-        // print results
-        System.out.println("Offset: "+ offset);
-    }*/

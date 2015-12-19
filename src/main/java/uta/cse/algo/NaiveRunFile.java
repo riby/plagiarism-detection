@@ -18,8 +18,7 @@ public class NaiveRunFile  implements  FileRead  {
     double plagarizedPercent;
     int totalCorpusSize;
     int patternFileSize;
-    //@Autowired
-   // private static FileRepository repository;
+
     private ArrayList<String> testFile;
     private ArrayList<ArrayList<String>> listOfFiles;
     private ArrayList<String> Fnames;
